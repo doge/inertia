@@ -8,6 +8,7 @@ a simple cli menu library for python
 ## things to add
 * sub menus
 * clearing cli on new item select [cmd]
+* colors
 
 ## usage
 ```python
