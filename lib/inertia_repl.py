@@ -54,27 +54,27 @@ def render():
   populate()
   while True:    
       key = ord(getch.getch())
-      if key == 66:
+      if key == 66: # down arrow
           if current <= 0:
             current = current + 1
           else:
             current = len(items) - 1
           replit.clear()
           populate()
-      elif key == 65: 
+      elif key == 65: # up arrow
           if current > 0:
               current = current - 1
           else:
               current = 0
           replit.clear()
           populate()
-      elif key == 67:
-        print(colors["white"])
-        separator()
-        print("\t\toutput")
-        separator()
+      elif key == 67: # right arrow
+        replit.clear()
+        print(colors["white"], end = "")
         if callable(list(items.values())[current]):
             list(items.values())[current]()
         else:
             eval(list(items.values())[current])
-        separator()
+      elif key == 10 or key == 68 or key == 27: # back arrow, escape, enter
+        replit.clear()
+        populate()
