@@ -2,14 +2,14 @@
 a simple cli menu library for python
 
 ## features
-* arrow based navigation
-* titles
-* easy to use
+* [x] arrow based navigation
+* [x] titles
+* [x] easy to use
 
 ## things to add
-* sub menus
-* clearing cli on new item select [cmd]
-* colors
+* [ ] sub menus
+* [ ] clearing cli on new item select [cmd]
+* [x] colors
 
 ## usage
 ```python
