@@ -3,6 +3,7 @@ a simple cli menu library for python
 
 ## features
 * arrow based navigation
+* titles
 * easy to use
 
 ## things to add
@@ -20,8 +21,9 @@ def hello():
 def world():
     print("World")
 
+inertia.title("My Menu")
 inertia.add_item("hello", hello)
 inertia.add_item("world", world)
 inertia.add_item("hello world", 'print("hello world")')
-inertia.display()
+inertia.render()
 ```
