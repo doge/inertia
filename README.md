@@ -7,9 +7,9 @@ a simple cli menu library for python
 * [x] easy to use
 
 ## things to add
-* [ ] sub menus
-* [ ] clearing cli on new item select [cmd]
+* [x] clearing cli
 * [x] colors
+* [ ] ~~sub menus~~
 
 ## usage
 ```python
@@ -27,3 +27,4 @@ inertia.add_item("world", world)
 inertia.add_item("hello world", 'print("hello world")')
 inertia.render()
 ```
+[requirements.txt](https://github.com/pain/inertia/blob/master/requirements.txt)
