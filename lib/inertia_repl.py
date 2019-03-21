@@ -1,4 +1,5 @@
-import getch, replit
+from getch import getch
+import replit
 
 items = {}
 current = 0
@@ -16,22 +17,28 @@ colors = {
   "white": "\033[1;37;1m"
 }
 
+
 def separator():
   print("-----------------------")
+
 
 def color(col):
   global current_color
   current_color = col
 
+
 def title(text):
   global title_text
   title_text = text
 
+
 def add_item(name, function):
   items[name] = function
 
+
 if current_color == "":
   current_color = "white"
+
 
 def populate():
   if len(title_text) > 0:
@@ -48,12 +55,13 @@ def populate():
         else:
           print("%s %s" % (colors["white"], list(items.keys())[x]))
 
+
 def render():
   global current, current_color
   replit.clear()
   populate()
-  while True:    
-      key = ord(getch.getch())
+  while True:
+      key = ord(getch())
       if key == 66: # down arrow
           if current <= 0:
             current = current + 1
