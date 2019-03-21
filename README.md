@@ -3,12 +3,12 @@ a simple cli menu library for python
 
 ## features
 * [x] arrow based navigation
+* [x] colors
 * [x] titles
 * [x] easy to use
 
 ## things to add
 * [x] clearing cli
-* [x] colors
 * [ ] ~~sub menus~~
 
 ## usage
