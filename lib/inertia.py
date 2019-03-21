@@ -1,10 +1,9 @@
 from getch import getch
-import os
+import replit
 
 items = {}
 current = 0
 title_text = ""
-clear = lambda: os.system('cls')
 
 current_color = ""
 colors = {
@@ -18,22 +17,28 @@ colors = {
   "white": "\033[1;37;1m"
 }
 
+
 def separator():
   print("-----------------------")
+
 
 def color(col):
   global current_color
   current_color = col
 
+
 def title(text):
   global title_text
   title_text = text
 
+
 def add_item(name, function):
   items[name] = function
 
+
 if current_color == "":
   current_color = "white"
+
 
 def populate():
   if len(title_text) > 0:
@@ -50,33 +55,34 @@ def populate():
         else:
           print("%s %s" % (colors["white"], list(items.keys())[x]))
 
+
 def render():
   global current, current_color
-  clear()
+  replit.clear()
   populate()
-  while True:    
+  while True:
       key = ord(getch())
-      if key == 80: # down arrow
+      if key == 66: # down arrow
           if current <= 0:
             current = current + 1
           else:
             current = len(items) - 1
-          clear()
+          replit.clear()
           populate()
-      elif key == 72: # up arrow
+      elif key == 65: # up arrow
           if current > 0:
               current = current - 1
           else:
               current = 0
-          clear()
+          replit.clear()
           populate()
-      elif key == 77: # right arrow
-        clear()
+      elif key == 67: # right arrow
+        replit.clear()
         print(colors["white"], end = "")
         if callable(list(items.values())[current]):
             list(items.values())[current]()
         else:
             eval(list(items.values())[current])
-      elif key == 75 or key == 27 or key == 13: # back arrow, escape, enter
-        clear()
+      elif key == 10 or key == 68 or key == 27: # back arrow, escape, enter
+        replit.clear()
         populate()
