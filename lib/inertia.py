@@ -1,9 +1,10 @@
 from getch import getch
-import replit
+import os
 
 items = {}
 current = 0
 title_text = ""
+clear = lambda: os.system('cls')
 
 current_color = ""
 colors = {
@@ -17,28 +18,22 @@ colors = {
   "white": "\033[1;37;1m"
 }
 
-
 def separator():
   print("-----------------------")
-
 
 def color(col):
   global current_color
   current_color = col
 
-
 def title(text):
   global title_text
   title_text = text
 
-
 def add_item(name, function):
   items[name] = function
 
-
 if current_color == "":
   current_color = "white"
-
 
 def populate():
   if len(title_text) > 0:
@@ -55,34 +50,40 @@ def populate():
         else:
           print("%s %s" % (colors["white"], list(items.keys())[x]))
 
-
 def render():
   global current, current_color
-  replit.clear()
+  clear()
   populate()
-  while True:
+  while True:    
       key = ord(getch())
-      if key == 66: # down arrow
+      if key == 80: # down arrow
           if current <= 0:
             current = current + 1
           else:
             current = len(items) - 1
-          replit.clear()
+          clear()
           populate()
-      elif key == 65: # up arrow
+      elif key == 72: # up arrow
           if current > 0:
               current = current - 1
           else:
               current = 0
-          replit.clear()
+          clear()
           populate()
-      elif key == 67: # right arrow
-        replit.clear()
+      elif key == 77: # right arrow
+        clear()
         print(colors["white"], end = "")
         if callable(list(items.values())[current]):
             list(items.values())[current]()
         else:
             eval(list(items.values())[current])
-      elif key == 10 or key == 68 or key == 27: # back arrow, escape, enter
-        replit.clear()
+      elif key == 75 or key == 27 or key == 13: # back arrow, escape, enter
+        clear()
         populate()
+
+title("hello")
+color("red")
+add_item("hello world", 'print("hello world")')
+add_item("hello wor3ld", 'print("hello world")')
+add_item("hello wo2rld", 'print("hello world")')
+render()
