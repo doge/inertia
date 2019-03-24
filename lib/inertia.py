@@ -5,6 +5,7 @@ items = {}
 current = 0
 title_text = ""
 clear = lambda: os.system('cls')
+indicator = ""
 
 current_color = ""
 colors = {
@@ -29,6 +30,10 @@ def title(text):
   global title_text
   title_text = text
 
+def indicator(indi):
+  global indicator
+  indicator = indi
+
 def add_item(name, function):
   items[name] = function
 
@@ -41,9 +46,9 @@ def populate():
   for x in range(0, len(items)):
     if x == current:
       if len(title_text) > 0:
-        print("%s\t> %s" % (colors[current_color], list(items.keys())[x]))
+        print("%s\t%s %s" % (colors[current_color], indicator, list(items.keys())[x]))
       else:
-        print("%s> %s" % (colors[current_color], list(items.keys())[x]) + colors["white"])
+        print("%s%s %s" % (colors[current_color], indicator, list(items.keys())[x]) + colors["white"])
     else:
         if len(title_text) > 0:
           print("%s\t %s" % (colors["white"], list(items.keys())[x]))
@@ -80,10 +85,3 @@ def render():
       elif key == 75 or key == 27 or key == 13: # back arrow, escape, enter
         clear()
         populate()
-
-title("hello")
-color("red")
-add_item("hello world", 'print("hello world")')
-add_item("hello wor3ld", 'print("hello world")')
-add_item("hello wo2rld", 'print("hello world")')
-render()
