@@ -66,10 +66,10 @@ def render():
   while True:
     key = ord(getch())
     if key == 66: # down arrow
-        if current <= 0:
-          current = current + 1
+        if current >= 0 and current < len(items) - 1:
+            current = current + 1
         else:
-          current = len(items) - 1
+            current = len(items) - 1
         replit.clear()
         populate()
     elif key == 65: # up arrow
