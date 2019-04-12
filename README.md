@@ -3,26 +3,28 @@ a simple cli menu library for python
 
 ## features
 * [x] arrow based navigation
+* [x] sub-menus
 * [x] colors
 * [x] titles
-* [x] easy to use
 
-## usage
+## example
 ```python
 import inertia
 
-def hello():
-    print("Hello")
+def hello_world():
+  print("hello world")
 
-def world():
-    print("World")
+def world_hello():
+  print("world hello")
 
-inertia.title("inertia")
-inertia.color("red")
-inertia.indicator(">")
-inertia.add_item("hello", hello)
-inertia.add_item("world", world)
-inertia.add_item("hello world", 'print("hello world")')
-inertia.render()
+main = inertia.main_menu("this is our first menu title", "red", ">") # (self, title, color, indicator)
+main.add_item("hello world", hello_world)
+
+sub = inertia.sub_menu("this is our second menu title", "blue", ">")
+sub.add_item("hello world | sub (1)", hello_world)
+sub.add_item("hello world | sub (2)", world_hello)
+main.add_sub("sub-menu", sub)
+
+main.render()
 ```
 [requirements.txt](https://github.com/pain/inertia/blob/master/requirements.txt)
