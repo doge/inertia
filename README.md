@@ -17,7 +17,7 @@ def hello_world():
 def world_hello():
   print("world hello")
 
-main = inertia.main_menu("this is our first menu title", "red", ">") # (self, title, color, indicator)
+main = inertia.main_menu("this is our first menu title", "red", ">")
 main.add_item("hello world", hello_world)
 
 sub = inertia.sub_menu("this is our second menu title", "blue", ">")
