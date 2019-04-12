@@ -7,6 +7,9 @@ a simple cli menu library for python
 * [x] colors
 * [x] titles
 
+## todo
+ * [ ] find a better way of doing sub-menus
+
 ## example
 ```python
 import inertia
