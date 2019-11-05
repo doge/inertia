@@ -11,130 +11,65 @@ colors = {
   "cyan": "\033[1;36;1m",
   "white": "\033[1;37;1m"
 }
-  
 
-class main_menu(object):
-  def __init__(self, title, color, indicator):
-
-    self.title = title
+class menu(object):
+  def __init__(self, title, indicator, color, *args):
+    self.labels = []
+    self.items = []
+    self.selected = 0
     self.color = color
     self.indicator = indicator
+    self.title = title
+    self.extra_args = list(args)
 
-    self.items = {}
-    self.labels = []
-    self.current = 0
+  def add_item(self, label, function, *args):
+    ''' 
+      append the function and arguments to the 'items' list and then append the 'label' of the item to the 'labels' list
+    '''
+    self.items.append([function, args])
+    self.labels.append(label);
 
-  def add_sub(self, label, init):
-    self.labels.append(label)
-    self.items[init] = sub_menu
+  def __concatenate_string(self, string, color):
+    ''' add a color to the string string and return the result '''
+    return colors[color] + string + colors["white"]
 
-  def add_item(self, label, function):
-    self.labels.append(label)
-    self.items[label] = function
-
-  def populate(self):
-    print(colors["white"] + self.title)
-    for x in range(0, len(self.items)):
-      if x == self.current:
-          print("%s\t%s %s%s" % (colors[self.color], self.indicator, self.labels[x], colors["white"]))
+  def __populate(self):
+    ''' add colors to our string and return the result '''
+    print(self.title)
+    for x in range(0, len(self.labels)):
+      if x == self.selected:
+        print(" %s" % self.__concatenate_string(self.indicator + " " + self.labels[x], self.color))
       else:
-          print("%s\t %s" % (colors["white"], self.labels[x]))
+        print(" ", self.labels[x])
 
   def render(self):
-    replit.clear()
-    self.populate()
+    '''
+      we can populate the cli with labels and then use 'getch' to capture input given from the cli then handle the input
+    '''
+
+    self.__populate()
     while True:
-      key = ord(getch())
-      if key == 65: # When the up arrow key is pressed,
-        if self.current > 0:
-          self.current -= 1
+      key = ord(getch.getch())
+      # when w or up arw is pressed;
+      if key == 119 and self.selected > 0 or key == 65 and self.selected > 0:
+        self.selected -= 1
+        self.__populate()
+      # when s or dwn arw is pressed;
+      elif key == 115 and self.selected < len(self.labels) - 1 or key == 66 and self.selected < len(self.labels) - 1:
+        self.selected += 1
+        self.__populate()
+      # when d or right arw is pressed;
+      elif key == 100 or key == 67:
+        # let's execute the function if it has arguments
+        if len(self.items[self.selected][1]) <= 0:
+          self.items[self.selected][0]()
         else:
-          self.current = 0
-        replit.clear()
-        self.populate()
-      elif key == 66: # When the down arrow key is pressed,
-        if self.current >= 0 and self.current < len(self.items) - 1:
-          self.current += 1
+          self.items[self.selected][0](*self.items[self.selected][1])
+      elif key == 97 or key == 68:
+        if len(self.extra_args) > 0 and self.extra_args[0] == "sub_menu":
+          break
         else:
-          self.current = len(self.items) - 1
-        replit.clear()
-        self.populate()
-      elif key == 67: # When the right arrow key is pressed,
-        try:
-          if isinstance(list(self.items.keys())[self.current], list(self.items.values())[self.current]):
-            replit.clear()
-            list(self.items.keys())[self.current].render()
-        except:
-          if callable(list(self.items.values())[self.current]):
-            replit.clear()
-            list(self.items.values())[self.current]()
-            print("The function has finished executing. Press any of the arrow keys to go to the main menu.")
-          else:
-            print("The function you have entered is not callable.")
-      elif key == 68: # When the left arrow key is pressed,
           replit.clear()
-          self.populate()
+          self.__populate()
 
-
-class sub_menu(object): # find a better way to do this
-  def __init__(self, title, color, indicator):
-
-    self.title = title
-    self.color = color
-    self.indicator = indicator
-
-    self.items = {}
-    self.labels = []
-    self.current = 0
-
-  def add_sub(self, label, init):
-    self.labels.append(label)
-    self.items[init] = sub_menu
-
-  def add_item(self, label, function):
-    self.labels.append(label)
-    self.items[label] = function
-
-  def populate(self):
-    print(colors["white"] + self.title)
-    for x in range(0, len(self.items)):
-      if x == self.current:
-          print("%s\t%s %s%s" % (colors[self.color], self.indicator, self.labels[x], colors["white"]))
-      else:
-          print("%s\t %s" % (colors["white"], self.labels[x]))
-    print("To go back to the main menu, press %s<--%s twice." % (colors[self.color], colors["white"]))
-
-  def render(self):
-    replit.clear()
-    self.populate()
-    while True:
-      key = ord(getch())
-      if key == 65: # When the up arrow key is pressed,
-        if self.current > 0:
-          self.current -= 1
-        else:
-          self.current = 0
-        replit.clear()
-        self.populate()
-      elif key == 66: # When the down arrow key is pressed,
-        if self.current >= 0 and self.current < len(self.items) - 1:
-          self.current += 1
-        else:
-          self.current = len(self.items) - 1
-        replit.clear()
-        self.populate()
-      elif key == 67: # When the right arrow key is pressed,
-        try:
-          if isinstance(list(self.items.keys())[self.current], list(self.items.values())[self.current]):
-            replit.clear()
-            list(self.items.keys())[self.current].populate()
-        except:
-          if callable(list(self.items.values())[self.current]):
-            replit.clear()
-            list(self.items.values())[self.current]()
-            print("The function has finished executing. Press any of the arrow keys to go to the main menu.")
-          else:
-            print("The function you have entered is not callable.")
-      elif key == 68: # When the left arrow key is pressed,
-        replit.clear()
-        break
+      replit.clear()
