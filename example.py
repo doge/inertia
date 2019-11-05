@@ -1,22 +1,21 @@
-import inertia
+from lib import inertia_repl as inertia
 
-'''
-  colors:
-    black, red, green, yellow, blue, purple, cyan, white
-'''
+# creating a sub menu is as easy as creating a menu. just add "sub_menu" as
+# an argument and make sure it is a string.
 
-def hello_world():
-  print("hello world")
+def foo():
+  print("bar")
 
-def world_hello():
-  print("world hello")
+def bar():
+  print("foo")
 
-main = inertia.main_menu("this is our first menu title", "red", ">") # (self, title, color, indicator)
-main.add_item("hello world", hello_world)
+m = inertia.menu("inertia", ">", "cyan")
+s_m = inertia.menu("sub-menu", ">", "red", "sub_menu")
 
-sub = inertia.sub_menu("this is our second menu title", "blue", ">")
-sub.add_item("hello world | sub (1)", hello_world)
-sub.add_item("hello world | sub (2)", world_hello)
-main.add_sub("sub-menu", sub)
+m.add_item("foo", foo)
+m.add_item("second menu", s_m.render)
 
-main.render()
+s_m.add_item("1st item", foo)
+s_m.add_item("2nd item", bar)
+
+m.render()
