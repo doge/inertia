@@ -7,27 +7,30 @@ a simple cli menu library for python
 * [x] colors
 * [x] titles
 
-## todo
- * [ ] find a better way of doing sub-menus
+## to-do
+* [x] [repl.it](https://repl.it) support
+* [ ] windows support
+* [ ] osx support
 
 ## example
 ```python
-import inertia
+from lib import inertia_repl as inertia
 
-def hello_world():
-  print("hello world")
+def foo():
+  print("bar")
 
-def world_hello():
-  print("world hello")
+def bar():
+  print("foo")
 
-main = inertia.main_menu("this is our first menu title", "red", ">")
-main.add_item("hello world", hello_world)
+m = inertia.menu("inertia", ">", "cyan")
+s_m = inertia.menu("sub-menu", ">", "red", "sub_menu")
 
-sub = inertia.sub_menu("this is our second menu title", "blue", ">")
-sub.add_item("hello world | sub (1)", hello_world)
-sub.add_item("hello world | sub (2)", world_hello)
-main.add_sub("sub-menu", sub)
+m.add_item("foo", foo)
+m.add_item("second menu", s_m.render)
 
-main.render()
+s_m.add_item("1st item", foo)
+s_m.add_item("2nd item", bar)
+
+m.render()
 ```
 [requirements.txt](https://github.com/pain/inertia/blob/master/requirements.txt)
